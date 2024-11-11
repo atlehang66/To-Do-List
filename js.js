@@ -142,3 +142,5 @@ filterDropdown.addEventListener('change', renderTasks);
 
 // Initial render of tasks
 renderTasks();
+
+

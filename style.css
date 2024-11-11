@@ -1,15 +1,25 @@
+/* Basic reset for margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
+    display: flex; /* Use Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full height of the viewport */
+    margin: 0; /* Remove default margin */
 }
 
 .container {
-    
+    background: linear-gradient(to bottom, #ff5e88, #ff9966); /* Gradient background */
     width: 80%;
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 600px; /* Maximum width */
+    margin: 20px auto; /* Center horizontally */
     padding: 20px;
     background-color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
@@ -48,7 +58,6 @@ body {
     position: absolute;
     right: 10px;
     background-color: transparent;
-    /* border: none; */
     font-size: 1rem;
     cursor: pointer;
     z-index: 2;
@@ -57,14 +66,13 @@ body {
     width: auto;
     transition: color 0.3s ease; /* Smooth color change on hover */
     border-right: #000000;
-    border-image: linear-gradient(to right, white, #4CAF50); /* Green to white gradient */
+    border-image: linear-gradient(to right, white, #ff6200); /* Green to white gradient */
     border-image-slice: 1; /* Ensures the gradient is applied to the entire border */
-    
 }
+
 #filterDropdown.hidden {
     display: none;
 }
-
 
 #filterDropdown:hover {
     color: #4CAF50; /* Subtle change on hover */
@@ -106,6 +114,10 @@ body {
 
 #addButton:active {
     transform: translateY(1px); /* Simulate button press */
+}
+
+img {
+    width: 30px;
 }
 
 .list {
@@ -153,9 +165,7 @@ body {
 }
 
 .remove-button:active {
-    transform: translateY(1px); /* Simulate button press */
+    transform: translateY(1);
 }
 
-input[type="checkbox"] {
-    margin-right: 10px;
-}
+
