@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body {
@@ -13,6 +14,7 @@ body {
     align-items: center; /* Center vertically */
     height: 100vh; /* Full height of the viewport */
     margin: 0; /* Remove default margin */
+    
 }
 
 .container {
@@ -196,7 +198,7 @@ img {
 
 iframe{
     width: 400px;
-    height: 400px;
+    height: 380px;
     overflow: none;
 }
 .myframe{
