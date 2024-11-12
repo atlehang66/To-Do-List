@@ -13,64 +13,66 @@ function saveTasks() {
 }
 
 // Function to add a new task
-addButton.addEventListener('click', function() {
-    const taskText = inputField.value.trim();
-    
-    if (taskText) {
-        const newTask = {
-            text: taskText,
-            completed: false
-        };
-        tasks.push(newTask);
-        saveTasks();  // Save tasks to localStorage
-        renderTasks();
-        inputField.value = '';  // Clear input field after adding
-    } else {
-        alert("Please enter a task.");
-    }
-});
+        addButton.addEventListener('click', function() {
+            const taskText = inputField.value.trim();
+            const selectedDate = JSON.parse(localStorage.getItem('selectedDate')); // Get the selected date from localStorage
 
-// Function to render tasks based on filter
-function renderTasks() {
-    const filterValue = filterDropdown.value;
-    listContainer.innerHTML = ''; // Clear existing list
+            if (taskText) {
+                const newTask = {
+                    text: taskText,
+                    completed: false,
+                    date: selectedDate ? `${selectedDate.day}/${selectedDate.month + 1}/${selectedDate.year}` : "No date selected"
+                };
+                tasks.push(newTask);
+                saveTasks();  // Save tasks to localStorage
+                renderTasks();
+                inputField.value = '';  // Clear input field after adding
+            } else {
+                alert("Please enter a task.");
+            }
+        });
 
-    const filteredTasks = tasks.filter(task => {
-        if (filterValue === 'completed') {
-            return task.completed;
-        } else if (filterValue === 'pending') {
-            return !task.completed;
-        }
-        return true; // Show all tasks by default
-    });
 
-    filteredTasks.forEach((task, index) => {
+    // Function to render tasks based on filter
+    function renderTasks() {
+        const filterValue = filterDropdown.value;
+        listContainer.innerHTML = ''; // Clear existing list
+
+        const filteredTasks = tasks.filter(task => {
+            if (filterValue === 'completed') {
+                return task.completed;
+            } else if (filterValue === 'pending') {
+                return !task.completed;
+            }
+            return true; // Show all tasks by default
+        });
+
+        filteredTasks.forEach((task, index) => {
         const taskElement = document.createElement('div');
         taskElement.classList.add('task-item');
         if (task.completed) {
             taskElement.classList.add('completed'); // Apply completed style
         }
 
-        // Task text
+        // Task text and date
         const taskText = document.createElement('span');
-        taskText.textContent = task.text;
+        taskText.textContent = `${task.text} (${task.date})`;  // Show the date with the task text
+        taskText.classList.add('task-text');
 
-        // Checkbox to mark task as completed
+        // Checkbox, edit, and delete buttons remain the same
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.completed;
         checkbox.addEventListener('change', () => toggleTaskCompletion(index));
 
-        // Edit button
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
-        editButton.classList.add('edit-button');
+        editButton.classList.add('save-button');
         editButton.addEventListener('click', () => editTask(index));
 
-        // Remove button
         const removeButton = document.createElement('button');
-        removeButton.textContent = 'x';
-        removeButton.classList.add('remove-button');
+        removeButton.textContent = 'Delete';
+        removeButton.classList.add('save-button');
         removeButton.addEventListener('click', () => removeTask(index));
 
         // Append elements to task container
@@ -83,6 +85,7 @@ function renderTasks() {
         listContainer.appendChild(taskElement);
     });
 }
+
 
 // Toggle task completion status
 function toggleTaskCompletion(index) {
@@ -98,8 +101,8 @@ function removeTask(index) {
     renderTasks(); // Re-render after removal
 }
 
-// Edit a task
-function editTask(index) {
+    // Edit a task
+    function editTask(index) {
     const taskText = tasks[index].text;
 
     // Create an input field to edit the task
@@ -111,9 +114,13 @@ function editTask(index) {
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
 
+    // Apply CSS class
+    saveButton.classList.add('save-button');
+
     // Create a cancel button
     const cancelButton = document.createElement('button');
     cancelButton.textContent = 'Cancel';
+    cancelButton.classList.add('save-button');
 
     // Replace the task text with the input field and buttons
     const taskElement = listContainer.children[index];
