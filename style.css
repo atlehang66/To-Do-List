@@ -18,8 +18,8 @@ body {
 .container {
     background: linear-gradient(to bottom, #ff5e88, #ff9966); /* Gradient background */
     width: 80%;
-    max-width: 600px; /* Maximum width */
-    margin: 20px auto; /* Center horizontally */
+    max-width: 400px; /* Maximum width */
+    min-height: 335px;
     padding: 20px;
     background-color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
@@ -28,10 +28,7 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animation for interaction */
 }
 
-.container:hover {
-    transform: translateY(0); /* Hover effect to lift the container */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Increased shadow on hover for more 3D depth */
-}
+
 
 .header h1 {
     text-align: center;
@@ -115,6 +112,26 @@ body {
 #addButton:active {
     transform: translateY(1px); /* Simulate button press */
 }
+button.save-button {
+    
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: transparent;
+    color: green;
+    border: 1px solid green;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for button */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button.save-button:hover {
+    background-color: #45a049;
+}
+
+button.save-button:active {
+    background-color: #3e8e41;
+}
 
 img {
     width: 30px;
@@ -145,7 +162,16 @@ img {
     text-decoration: line-through;
     box-shadow: none; /* No shadow for completed tasks */
 }
-
+.task-text {
+    display: inline-block;     
+    width: 200px;               
+    text-align: center;         
+    white-space: nowrap;      
+    overflow: hidden;         
+    text-overflow: ellipsis;    
+    padding: 5px;               
+    font-family: Arial, sans-serif; 
+}
 .remove-button {
     background-color: #f44336;
     color: white;
@@ -168,4 +194,11 @@ img {
     transform: translateY(1);
 }
 
-
+iframe{
+    width: 400px;
+    height: 400px;
+    overflow: none;
+}
+.myframe{
+    height: 350px;
+}
