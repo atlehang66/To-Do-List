@@ -8,10 +8,13 @@ app.listen(3000, ()=>{
     console.log("Server running at http://localhost:3000/");
 });
 
+
+
+
 app.get('/', (req, res) => {
     res.render('index');
 });
-app.get('/test', (req, res) => {
-    res.render('test');
+app.get('/calendar', (req, res) => {
+    res.render('calendar');
 });
 

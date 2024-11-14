@@ -27,18 +27,50 @@ body {
 }
 
 .container {
-    background: linear-gradient(to bottom, #ff5e88, #ff9966); /* Gradient background */
+    background: linear-gradient(to bottom, #ff5e88, #ff9966); 
     width: 80%;
-    max-width: 400px; /* Maximum width */
-    min-height: 335px;
+    max-width: 400px; 
+    height: 335px;
     padding: 12px;
     background-color: transparent;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05); 
     border-radius: 8px;
-    transform: translateY(10px); /* Subtle floating effect */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animation for interaction */
+    transform: translateY(10px); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    overflow: hidden;
+}
+.container .list{
+    color: green;
+    overflow: auto;  
+    max-height: 200px; 
 }
 
+/* testing */ 
+/* Style the scrollbar track */
+.container .list::-webkit-scrollbar {
+    width: 4px;
+    margin-left: 4px;            
+}
+
+/* Style the scrollbar thumb */
+.container .list::-webkit-scrollbar-thumb {
+    background-color: #863148; 
+    border-radius: 4px;        
+}
+
+/* Style the scrollbar thumb on hover */
+.container .list::-webkit-scrollbar-thumb:hover {
+    background-color: #ffba98;
+}
+
+/* Optional: Style the scrollbar track */
+.container .list::-webkit-scrollbar-track {
+    
+    background: transparent;
+    border-radius: 4px;
+}
+/* testing end */
+ 
 
 
 .header h1 {
@@ -153,7 +185,9 @@ img {
 
 .list {
     margin-top: 20px;
+    height: 300px;
 }
+
 
 .task-item {
     display: flex;
@@ -216,6 +250,15 @@ iframe{
 .myframe{
     height: 350px;
 }
+.iframe2{
+    width: 400px;
+    height: 380px;
+    overflow: none;
+}
+.myframe2{
+    height: 350px;
+    text-align: center;
+}
      </style>
 </head>
 <body>
@@ -250,8 +293,10 @@ iframe{
         
     </div>
     <div class="myframe">
-        <iframe src="/test" frameborder="0"></iframe>
+        <iframe src="/calendar" frameborder="0"></iframe>
     </div>
+    
+    
     <!-- <div class="container">
         <div class="this">
             <center><h1>Sort Tasks</h1></center>
@@ -264,18 +309,14 @@ iframe{
         </div>
 
     </div> -->
-    <div class="container">
-        <div class="list" id="lisComplete">
-            <!-- Tasks will be dynamically added here -->
-            
-        </div>
-    </div>
+    
     <script>
         // Getting references to HTML elements
 const addButton = document.getElementById('addButton');
 const inputField = document.getElementById('listIn');
 const listContainer = document.getElementById('lisOut');
 const filterDropdown = document.getElementById('filterDropdown');
+
 
 // Load tasks from localStorage
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
