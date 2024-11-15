@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- calender library -->
+     <style>
+        /* Basic reset for margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex; /* Use Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full height of the viewport */
+    margin: 0; /* Remove default margin */
+    
+}
+
+.container {
+    background: linear-gradient(to bottom, #ff5e88, #ff9966); 
+    width: 80%;
+    max-width: 400px; 
+    height: 335px;
+    padding: 12px;
+    background-color: transparent;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05); 
+    border-radius: 8px;
+    transform: translateY(10px); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    overflow: hidden;
+}
+.container .list{
+    color: green;
+    overflow: auto;  
+    max-height: 200px; 
+}
+
+/* testing */ 
+/* Style the scrollbar track */
+.container .list::-webkit-scrollbar {
+    width: 4px;
+    margin-left: 4px;            
+}
+
+/* Style the scrollbar thumb */
+.container .list::-webkit-scrollbar-thumb {
+    background-color: #863148; 
+    border-radius: 4px;        
+}
+
+/* Style the scrollbar thumb on hover */
+.container .list::-webkit-scrollbar-thumb:hover {
+    background-color: #ffba98;
+}
+
+/* Optional: Style the scrollbar track */
+.container .list::-webkit-scrollbar-track {
+    
+    background: transparent;
+    border-radius: 4px;
+}
+/* testing end */
+ 
+
+
+.header h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Light shadow for header text */
+}
+
+.control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input-with-dropdown {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#filterDropdown {
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 2;
+    padding: 5px;
+    color: #555;
+    width: auto;
+    transition: color 0.3s ease; /* Smooth color change on hover */
+    border-right: #000000;
+    border-image: linear-gradient(to right, white, #ff6200); /* Green to white gradient */
+    border-image-slice: 1; /* Ensures the gradient is applied to the entire border */
+}
+
+#filterDropdown.hidden {
+    display: none;
+}
+
+#filterDropdown:hover {
+    color: #4CAF50; /* Subtle change on hover */
+}
+
+#listIn {
+    padding: 10px 10px 10px 40px;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f1f1 100%); /* Light gradient for depth */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inset shadow for input */
+    transition: box-shadow 0.2s ease;
+}
+
+#listIn:focus {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.15); /* Highlight focus with a soft shadow */
+}
+
+#addButton {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    border: 1px solid rgba(77, 0, 128, 0.295);
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for button */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+#addButton:hover {
+    border: 1px solid rgba(77, 0, 128, 0.295);
+    background-color: #45a049;
+    color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Lift button on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+#addButton:active {
+    transform: translateY(1px); /* Simulate button press */
+}
+button.save-button {
+   
+    color: white;
+    font-weight: 600;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: transparent;
+    border: 1px solid rgba(68, 0, 255, 0.116);
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for button */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button.save-button:hover {
+    background-color: #45a049;
+}
+
+button.save-button:active {
+    background-color: #3e8e41;
+}
+
+img {
+    width: 30px;
+}
+
+.list {
+    margin-top: 20px;
+    height: 300px;
+}
+
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+    margin-bottom: 10px;
+    background: linear-gradient(145deg, transparent, #c4e9d78e); /* Soft gradient background for task */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    transition: box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
+}
+
+.task-item.completed {
+    background-color: #d3ffd3; /* Light green for completed tasks */
+    text-decoration: line-through;
+    box-shadow: none; /* No shadow for completed tasks */
+}
+.task-text {
+    display: inline-block;     
+    width: 200px;               
+    text-align: center;         
+    white-space: nowrap;      
+    overflow: hidden;         
+    text-overflow: ellipsis;    
+    padding: 5px;               
+    font-family: Arial, sans-serif; 
+}
+.remove-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for remove button */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.remove-button:hover {
+    background-color: #e53935;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Lift effect on hover */
+    transform: translateY(-1px); /* Slight lift for interaction */
+}
+
+.remove-button:active {
+    transform: translateY(1);
+}
+
+iframe{
+    width: 400px;
+    height: 380px;
+    overflow: none;
+}
+.myframe{
+    height: 350px;
+}
+.iframe2{
+    width: 400px;
+    height: 380px;
+    overflow: none;
+}
+.myframe2{
+    height: 350px;
+    text-align: center;
+}
+     </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>To Do List</h1>
+        </div>
+        
+        <!-- Control Section -->
+        <div class="control">
+            <div class="input-with-dropdown">
+                
+                <input type="text" id="listIn" placeholder="Enter a new task" />
+                <select id="filterDropdown">
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+            <!-- <button class="date" onclick="window.location.href='test.html'">
+                <img src="date-svgrepo-com.png" alt="Date icon">
+            </button> -->
+            <button id="addButton">Add</button>
+            
+        </div>
+       
+        <!-- Task List Section -->
+        <div class="list" id="lisOut">
+            <!-- Tasks will be dynamically added here -->
+            
+        </div>
+        
+    </div>
+
+
+    <div class="myframe">
+        <iframe src="To-Do-List/calendar.html" frameborder="0"></iframe>
+    </div>
+    
+
+  
+    
+    <!-- <div class="container">
+        <div class="this">
+            <center><h1>Sort Tasks</h1></center>
+            
+            <ul class="newFilter">
+                <li data-value="all">Option 1</li>
+                <li data-value="completed">Option 2</li>
+                <li data-value="pending">Option 3</li> 
+            </ul>
+        </div>
+
+    </div> -->
+    
+    <script>
+        // Getting references to HTML elements
+const addButton = document.getElementById('addButton');
+const inputField = document.getElementById('listIn');
+const listContainer = document.getElementById('lisOut');
+const filterDropdown = document.getElementById('filterDropdown');
+
+
+// Load tasks from localStorage
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+// Function to save tasks to localStorage
+function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Function to add a new task
+        addButton.addEventListener('click', function() {
+            const taskText = inputField.value.trim();
+            const selectedDate = JSON.parse(localStorage.getItem('selectedDate')); // Get the selected date from localStorage
+
+            if (taskText) {
+                const newTask = {
+                    text: taskText,
+                    completed: false,
+                    date: selectedDate ? `${selectedDate.day}/${selectedDate.month + 1}/${selectedDate.year}` : "No date selected"
+                };
+                tasks.push(newTask);
+                saveTasks();  // Save tasks to localStorage
+                renderTasks();
+                inputField.value = '';  // Clear input field after adding
+            } else {
+                alert("Please enter a task.");
+            }
+        });
+
+
+    // Function to render tasks based on filter
+    function renderTasks() {
+        const filterValue = filterDropdown.value;
+        listContainer.innerHTML = ''; // Clear existing list
+
+        const filteredTasks = tasks.filter(task => {
+            if (filterValue === 'completed') {
+                return task.completed;
+            } else if (filterValue === 'pending') {
+                return !task.completed;
+            }
+            return true; // Show all tasks by default
+        });
+
+        filteredTasks.forEach((task, index) => {
+        const taskElement = document.createElement('div');
+        taskElement.classList.add('task-item');
+        if (task.completed) {
+            taskElement.classList.add('completed'); // Apply completed style
+        }
+
+        // Task text and date
+        const taskText = document.createElement('span');
+        taskText.textContent = `${task.text} (${task.date})`;  // Show the date with the task text
+        taskText.classList.add('task-text');
+
+        // Checkbox, edit, and delete buttons remain the same
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = task.completed;
+        checkbox.addEventListener('change', () => toggleTaskCompletion(index));
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.classList.add('save-button');
+        editButton.addEventListener('click', () => editTask(index));
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Delete';
+        removeButton.classList.add('save-button');
+        removeButton.addEventListener('click', () => removeTask(index));
+
+        // Append elements to task container
+        taskElement.appendChild(checkbox);
+        taskElement.appendChild(taskText);
+        taskElement.appendChild(editButton);
+        taskElement.appendChild(removeButton);
+
+        // Add task to the list
+        listContainer.appendChild(taskElement);
+    });
+}
+
+
+// Toggle task completion status
+function toggleTaskCompletion(index) {
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks(); // Save updated tasks to localStorage
+    renderTasks(); // Re-render to update the UI
+}
+
+// Remove a task from the list
+function removeTask(index) {
+    tasks.splice(index, 1);
+    saveTasks(); // Save updated tasks to localStorage
+    renderTasks(); // Re-render after removal
+}
+
+    // Edit a task
+    function editTask(index) {
+    const taskText = tasks[index].text;
+
+    // Create an input field to edit the task
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.value = taskText;
+
+    // Create a save button
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+
+    // Apply CSS class
+    saveButton.classList.add('save-button');
+
+    // Create a cancel button
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.classList.add('save-button');
+
+    // Replace the task text with the input field and buttons
+    const taskElement = listContainer.children[index];
+    taskElement.querySelector('span').replaceWith(inputField);
+    taskElement.querySelector('.edit-button').replaceWith(saveButton);
+    taskElement.querySelector('.remove-button').replaceWith(cancelButton);
+
+    // Save the edited task
+    saveButton.addEventListener('click', function() {
+        const updatedText = inputField.value.trim();
+        if (updatedText) {
+            tasks[index].text = updatedText;
+            saveTasks();  // Save updated tasks to localStorage
+            renderTasks(); // Re-render the task list
+        }
+    });
+
+    // Cancel editing
+    cancelButton.addEventListener('click', function() {
+        renderTasks(); // Re-render without making changes
+    });
+}
+
+// Listen for changes in the dropdown selection
+filterDropdown.addEventListener('change', renderTasks);
+
+
+// Initial render of tasks
+renderTasks();
+    </script>
+ 
+</body>
+</html>
