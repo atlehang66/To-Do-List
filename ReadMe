@@ -1,1 +1,56 @@
 #To-do List#
+📋 To-Do List App with Calendar Integration
+Welcome to the To-Do List App! This project is a simple yet powerful tool for managing your tasks and schedule. With a built-in calendar, it helps you organize your day, week, and month effectively.
+
+🚀 Features
+Task Management: Create, edit, and delete tasks.
+Calendar Integration: View tasks and deadlines on a calendar interface.
+Dynamic Styling: User-friendly interface built with HTML and CSS.
+Real-Time Updates: Responsive task list powered by Node.js and JavaScript.
+
+🛠️ Technologies
+This project is built using:
+Node.js: Backend development and API handling.
+JavaScript: Client-side logic and interactivity.
+HTML & CSS: Structuring and styling the user interface.
+
+
+📂 Project Structure
+plaintext
+Copy code
+📁 project-root  
+├── 📂 public  
+│   ├── 📄 index.html      # Main HTML file  
+│   ├── 📂 css  
+│   │   └── 📄 styles.css  # CSS for styling  
+│   ├── 📂 js  
+│   │   └── 📄 app.js      # Client-side JavaScript  
+├── 📂 server  
+│   ├── 📄 server.js       # Node.js server code  
+├── 📄 package.json        # Project dependencies  
+└── 📄 README.md           # Project documentation  
+🖥️ Setup
+Follow these steps to get started:
+
+Clone the repository:
+git clone <repository-link>  
+Navigate to the project directory:
+
+<bash>
+Copy code
+cd project-root  
+Install dependencies:
+
+<bash>
+Copy code
+npm install  
+Start the server:
+
+<bash>
+Copy code
+node server/server.js  
+Open your browser and navigate to http://localhost:3000.
+
+📎 Link
+Project Demo Link:
+
